@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum OutreachStatus {
+  pending
+  crawling
+  analyzing
+  generating_resume
+  ats_checking
+  drafting_email
+  ready_for_review
+  approved
+  sending
+  sent
+  failed
+  rejected
+  replied
+}
+
+model Company {
+  id          String   @id @default(uuid())
+  name        String
+  website     String
+  email       String
+  description String?
+  linkedin    String?
+  twitter     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  crawlData  CrawlData?
+  analysis   CompanyAnalysis?
+  outreach   Outreach?
+
+  @@unique([email, website])
+}
+
+model CrawlData {
+  id        String   @id @default(uuid())
+  companyId String   @unique
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  rawHtml   String?
+  markdown  String?
+  pages     Json?
+  crawledAt DateTime @default(now())
+}
+
+model CompanyAnalysis {
+  id              String   @id @default(uuid())
+  companyId       String   @unique
+  company         Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  industry        String?
+  product         String?
+  businessModel   String?
+  techStack       Json?
+  engineeringTools Json?
+  hiringSignals   Json?
+  relevanceScore  Int      @default(0)
+  summary         String?
+  analyzedAt      DateTime @default(now())
+}
+
+model Outreach {
+  id             String         @id @default(uuid())
+  companyId      String         @unique
+  company        Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  status         OutreachStatus @default(pending)
+  resumePath     String?
+  atsScore       Int?
+  atsDetails     Json?
+  emailSubject   String?
+  emailBody      String?
+  sentAt         DateTime?
+  repliedAt      DateTime?
+  errorMessage   String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
