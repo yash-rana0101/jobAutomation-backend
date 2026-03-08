@@ -1,0 +1,61 @@
+**YASH RANA**
+[City, State] | [Email Address] | [Phone Number] | [LinkedIn Profile URL] | [GitHub Profile URL]
+
+---
+
+**SUMMARY**
+
+Highly skilled Fullstack Engineer specializing in building robust, scalable SaaS platforms and distributed systems. Proficient in Node.js, TypeScript, React, and cloud technologies (AWS, Docker, Kubernetes), with a proven track record of developing high-performance APIs, microservices, and automation tools. Passionate about leveraging technical expertise to enhance complex B2B solutions like product configurators, catalog management, and quoting automation, and eager to contribute to Electrify's innovative platform.
+
+---
+
+**SKILLS**
+
+*   **Languages & Runtimes:** Node.js, TypeScript, Python
+*   **Frontend Frameworks:** React
+*   **Databases:** PostgreSQL, MongoDB, Redis
+*   **Cloud & DevOps:** AWS, Docker, Kubernetes, CI/CD
+*   **Architecture:** Microservices, RESTful APIs
+*   **Tools & Methodologies:** Git, Agile/Scrum
+
+---
+
+**EXPERIENCE**
+
+**[Your Company Name]** | [Your Role] | [City, State]
+[Start Date] – [End Date] (e.g., March 2021 – Present)
+
+*   Architected and developed highly scalable RESTful APIs and microservices using Node.js and TypeScript, supporting complex data interactions and high-throughput operations critical for SaaS applications.
+*   Designed and implemented microservices architectures on AWS, leveraging Docker and Kubernetes for containerization and orchestration to ensure high availability and horizontal scalability of backend services.
+*   Managed and optimized data storage solutions using PostgreSQL and MongoDB, designing efficient schemas and queries to support dynamic product configurators, extensive catalog management, and historical data analytics.
+*   Developed robust automation tools with Python and Node.js, streamlining critical business processes, data ingestion, and deployment pipelines, significantly reducing manual effort and improving operational efficiency.
+*   Integrated AI/ML models into backend services to enhance analytical capabilities and automate intelligent decision-making, contributing to features like predictive insights or optimized product recommendations.
+*   Implemented and maintained comprehensive CI/CD pipelines, automating testing, deployment, and monitoring processes to ensure rapid and reliable software delivery and continuous platform improvement.
+*   Contributed to frontend development using React, building intuitive user interfaces for managing complex product data, configurations, and quoting workflows.
+
+**[Previous Company Name]** | [Previous Role] | [City, State]
+[Start Date] – [End Date] (e.g., June 2018 – February 2021)
+
+*   [Optimized bullet point 1 relevant to the company's problem space if possible, e.g., "Developed backend services for a B2B platform managing inventory and order processing."]
+*   [Optimized bullet point 2]
+*   [Optimized bullet point 3]
+
+---
+
+**PROJECTS**
+
+**[Project Name 1]** | [Technologies Used]
+*   [Brief description of project, highlighting relevance to Electrify's domain if applicable (e.g., a configurator, data analytics dashboard, automation tool). Focus on your contributions and impact.]
+
+**[Project Name 2]** | [Technologies Used]
+*   [Brief description of project, highlighting relevance to Electrify's domain if applicable.]
+
+---
+
+**EDUCATION**
+
+**[Your Degree]** | [Your Major]
+[Your University Name] | [City, State]
+[Graduation Date] (e.g., May 2018)
+
+---

@@ -1,0 +1,69 @@
+Here's an optimized resume for Yash Rana, tailored for Rocket Doctor AI, assuming it operates within the machine vision/industrial automation sector as per the company info provided.
+
+---
+
+**Yash Rana**
+[Your Phone Number] | [Your Email Address] | [Your LinkedIn Profile URL] | [Your GitHub Profile URL]
+
+---
+
+**Summary**
+Highly accomplished Backend/Fullstack Engineer with a robust background in designing, developing, and deploying scalable APIs, microservices, and automation tools. Proven expertise in Node.js, TypeScript, Python, and cloud platforms like AWS, specializing in integrating AI/ML functionalities and managing complex data pipelines. Eager to leverage strong technical skills in Computer Vision and Machine Learning infrastructure to contribute to Rocket Doctor AI's innovative machine vision and imaging solutions.
+
+---
+
+**Skills**
+
+*   **Programming Languages:** Python, TypeScript, Node.js
+*   **Cloud & DevOps:** AWS (EC2, S3, Lambda, RDS, EKS), Docker, Kubernetes, CI/CD (GitHub Actions, GitLab CI)
+*   **Databases:** PostgreSQL, MongoDB, Redis
+*   **Frameworks & Libraries:** React, Express.js
+*   **Architectures:** Microservices, RESTful APIs, Message Queues
+*   **Concepts:** Computer Vision (ML/AI Integration), Scalable Data Processing, Real-time Systems, Automation
+
+---
+
+**Experience**
+
+**[Your Previous Company Name]**, [City, State]
+*Backend/Fullstack Engineer* | [Start Date] – [End Date]
+
+*   Developed and maintained highly scalable Node.js and Python microservices, processing high-volume data streams crucial for downstream analytics and AI model training.
+*   Designed and implemented RESTful APIs using Node.js/TypeScript, facilitating seamless data exchange and control for complex distributed systems, analogous to managing industrial sensor data.
+*   Orchestrated and deployed containerized applications using Docker and Kubernetes on AWS, ensuring high availability and efficient resource utilization for data-intensive workloads.
+*   Integrated advanced AI/ML models into production workflows, building robust data ingestion and serving pipelines that supported real-time decision-making and automated processes.
+*   Managed and optimized PostgreSQL and MongoDB databases, including schema design, performance tuning, and ensuring data integrity for large datasets.
+*   Created comprehensive automation tools in Python to streamline development, testing, and deployment processes, significantly improving operational efficiency and reducing manual overhead.
+*   Utilized Redis for high-speed caching and real-time data processing, enhancing the responsiveness and performance of critical applications.
+*   Implemented CI/CD pipelines to automate testing and deployment, ensuring rapid and reliable delivery of software updates in a fast-paced environment.
+*   Collaborated with cross-functional teams to define system requirements, architect solutions, and deliver features, focusing on performance, reliability, and scalability.
+
+**[Another Relevant Company/Role]** (Optional, if applicable)
+*Fullstack Developer* | [Start Date] – [End Date]
+
+*   [Optimized bullet point similar to above, focusing on relevant skills like data handling, automation, cloud, or AI integration]
+*   [Optimized bullet point]
+*   [Optimized bullet point]
+
+---
+
+**Projects**
+
+**[Project Name 1]** - [Brief Description]
+*   Engineered a full-stack application leveraging Node.js, React, and PostgreSQL, demonstrating robust data management and interactive UI design.
+*   Implemented a scalable backend capable of processing concurrent requests and managing complex data relationships, simulating real-time system monitoring.
+*   Utilized Docker for consistent development and deployment environments.
+
+**[Project Name 2]** - [Brief Description]
+*   Developed a Python-based automation script for data extraction and transformation, handling large volumes of unstructured data.
+*   Integrated with AWS S3 for storage and leveraged cloud functions (Lambda) for serverless processing, showcasing cloud-native architectural patterns.
+*   (Optional: Mention if it involved any basic computer vision library usage or data analysis relevant to image processing.)
+
+---
+
+**Education**
+
+**[Your Degree/Major]** | [Your University Name], [City, State]
+[Graduation Date]
+
+---

@@ -1,0 +1,50 @@
+```
+Yash Rana
+[Your Phone Number] | [Your Email Address] | [Your LinkedIn Profile URL] | [Your GitHub Profile URL]
+
+Summary
+Highly skilled and results-driven Backend/Fullstack Engineer with X years of experience, specializing in building scalable APIs, robust microservices, and integrating cutting-edge AI solutions. Proficient in Node.js, Python, TypeScript, and React, with a strong command of cloud platforms (AWS), containerization (Docker, Kubernetes), and CI/CD pipelines. Passionate about decentralized finance (DeFi) and blockchain technology, eager to leverage expertise in high-performance system design and AI integration to contribute to Cybro's innovative AI-powered yield aggregation platform.
+
+Skills
+Backend & AI: Python (AI/ML Integration), Node.js, TypeScript, Express.js, RESTful APIs, Microservices Architecture
+Frontend: React, JavaScript, HTML5, CSS3
+Databases: PostgreSQL, MongoDB, Redis
+DevOps & Cloud: Docker, Kubernetes, AWS (EC2, S3, Lambda, RDS), CI/CD (GitHub Actions, GitLab CI), Git
+Tools & Practices: Hardhat/Foundry (Familiarity with concepts), Web3.js/Ethers.js (Familiarity with concepts), System Design, TDD, Agile/Scrum
+
+Experience
+
+[Company Name], [City, State]
+Backend/Fullstack Engineer | [Start Date] – [End Date]
+
+*   Architected and developed high-performance RESTful APIs and microservices using Node.js and TypeScript, handling large transaction volumes for financial data processing, ensuring data integrity and low latency.
+*   Integrated advanced AI/ML models (Python) into core backend services to optimize data analytics and recommendation engines, resulting in a 15% improvement in predictive accuracy.
+*   Designed and implemented scalable database schemas (PostgreSQL, MongoDB, Redis) to support rapid data ingestion and retrieval, critical for real-time application performance.
+*   Deployed and managed containerized applications using Docker and Kubernetes, significantly improving deployment efficiency and system resilience across AWS cloud infrastructure.
+*   Developed and maintained CI/CD pipelines using GitHub Actions, automating build, test, and deployment processes, reducing release cycles by 30%.
+*   Contributed to the development of dynamic and responsive user interfaces using React, enhancing user experience and interaction with complex data dashboards.
+*   Mentored junior engineers on best practices for scalable API design, performance optimization, and secure coding standards.
+
+[Previous Company Name], [City, State]
+Software Engineer | [Start Date] – [End Date]
+
+*   Developed and maintained core backend services in Node.js, improving system uptime to 99.9% through robust error handling and monitoring solutions.
+*   Implemented automated testing frameworks, increasing code coverage by 20% and reducing post-deployment bugs by 10%.
+*   Collaborated with cross-functional teams to define API specifications and integrate third-party services, streamlining data exchange and feature delivery.
+*   Managed cloud resources on AWS, including EC2 instances, S3 buckets, and RDS databases, ensuring optimal performance and cost-effectiveness.
+
+Projects
+
+[Project Title 1]
+*   [Brief description of project, highlighting relevant tech: Node.js, Python (AI), React, Docker, etc.]
+*   [Specific achievement or feature, e.g., "Developed a decentralized voting DApp leveraging web3.js for contract interaction."]
+
+[Project Title 2]
+*   [Brief description of project, highlighting relevant tech: Node.js, Python (AI), React, Docker, etc.]
+*   [Specific achievement or feature, e.g., "Built a sentiment analysis tool for financial news using Python and integrated it with a Node.js API."]
+
+Education
+
+[Your Degree], [Your Major]
+[Your University Name], [City, State] | [Graduation Date]
+```

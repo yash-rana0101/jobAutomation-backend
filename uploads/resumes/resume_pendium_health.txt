@@ -1,0 +1,64 @@
+**Yash Rana**
+[Your Phone Number] | [Your Email Address] | [Your LinkedIn Profile URL]
+
+---
+
+**Summary**
+
+Highly accomplished and results-driven Backend/Fullstack Engineer with X years of experience specializing in building robust, scalable APIs, microservices, and automation tools. Proficient in a diverse tech stack including Node.js, TypeScript, Python, and cloud platforms like AWS. Passionate about leveraging Artificial Intelligence and data-driven solutions to solve complex problems, with a proven track record of integrating AI capabilities into critical systems. Eager to contribute expertise to Pendium Health's mission of transforming healthcare through innovative AI-powered clinical decision support.
+
+---
+
+**Skills**
+
+*   **Programming & AI:** Python (AI/ML Integration, Data Processing), TypeScript, Node.js
+*   **Databases:** PostgreSQL, MongoDB, Redis
+*   **Cloud & DevOps:** AWS, Docker, Kubernetes, CI/CD
+*   **Web Technologies:** React, RESTful APIs, Microservices
+*   **Tools & Concepts:** Large Language Models (LLMs) Integration, System Design, Data Pipelines, Automation
+
+---
+
+**Experience**
+
+**Senior Software Engineer** | [Company Name], [City, State]
+[Month, Year] – [Month, Year]
+
+*   Led the design and development of high-performance microservices using Node.js and TypeScript, handling critical data processing for [mention relevant industry/data type if possible, e.g., "patient data," "financial transactions"] with a focus on scalability and security.
+*   Architected and implemented robust API integrations with external AI/ML services using Python, enabling real-time data analysis and enhancing [specific feature, e.g., "fraud detection capabilities," "personalized recommendations"].
+*   Designed and managed PostgreSQL and MongoDB databases, optimizing schemas and queries to support complex data models for large-scale applications, crucial for efficient data retrieval for AI pipelines.
+*   Deployed and managed containerized applications using Docker and Kubernetes on AWS, ensuring high availability, fault tolerance, and seamless CI/CD pipelines.
+*   Developed automation tools using Python scripts to streamline operational workflows, reducing manual effort by X% and improving data integrity for downstream AI processes.
+*   Collaborated with cross-functional teams to define project requirements, system architecture, and technology stack, delivering features that improved user engagement by Y%.
+
+**Software Engineer** | [Previous Company Name], [City, State]
+[Month, Year] – [Month, Year]
+
+*   Developed and maintained scalable backend APIs with Node.js, facilitating data exchange between frontend applications and various internal services, supporting a user base of over [Number] users.
+*   Contributed to the development of data processing pipelines that prepared and transformed large datasets for consumption by analytical models, laying groundwork for future AI integrations.
+*   Implemented caching strategies using Redis to improve API response times by Z%, significantly enhancing user experience and reducing database load.
+*   Participated in the full software development lifecycle, including requirements gathering, design, coding, testing, and deployment of features in an agile environment.
+*   Utilized AWS services (EC2, S3, RDS) to manage cloud infrastructure, ensuring reliable and secure operation of applications.
+
+---
+
+**Projects**
+
+**AI-Powered Clinical Data Assistant (Personal Project)**
+*   Developed a proof-of-concept backend service using Python and FastAPI to integrate with open-source Large Language Models, capable of summarizing medical research papers and answering clinical questions based on provided data.
+*   Designed a secure RESTful API layer in Node.js/TypeScript to interact with the LLM service, handling user queries and streaming responses for a potential frontend application.
+*   Utilized PostgreSQL for structured data storage related to user interactions and document indexing, enhancing data retrieval efficiency.
+
+**Distributed Task Queue System (GitHub)**
+*   Built a distributed task queue system using Node.js, Redis (for message brokering), and Docker, capable of processing asynchronous jobs at scale.
+*   Implemented worker processes that could be scaled independently, demonstrating expertise in microservices architecture and fault tolerance.
+
+---
+
+**Education**
+
+**Bachelor of Science in Computer Science**
+[University Name], [City, State]
+[Month, Year] – [Month, Year]
+
+---

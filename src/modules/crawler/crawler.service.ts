@@ -1,33 +1,60 @@
 import prisma from "../../config/database";
+import { CheerioCrawler, Configuration } from "crawlee";
 
 interface CrawlResult {
   markdown: string;
   pages: Record<string, string>;
 }
 
+const CRAWL_PATHS = ["/about", "/about-us", "/careers", "/jobs", "/products", "/services", "/engineering", "/blog"];
+const MAX_CONTENT_PER_PAGE = 15000;
+
 export async function crawlCompanyWebsite(companyId: string): Promise<CrawlResult> {
   const company = await prisma.company.findUnique({ where: { id: companyId } });
   if (!company) throw new Error("Company not found");
 
-  // Use Firecrawl API if available, otherwise use basic fetch
-  const markdown = await fetchPageContent(company.website);
+  const baseUrl = company.website.replace(/\/+$/, "");
+  const pages: Record<string, string> = {};
 
-  const pages: Record<string, string> = { homepage: markdown };
+  // Build the list of URLs to crawl
+  const urls = [baseUrl, ...CRAWL_PATHS.map((p) => `${baseUrl}${p}`)];
 
-  // Try common pages
-  const paths = ["/about", "/careers", "/products", "/services"];
-  for (const path of paths) {
-    try {
-      const content = await fetchPageContent(`${company.website}${path}`);
-      if (content && content.length > 100) {
-        pages[path] = content;
-      }
-    } catch {
-      // Page doesn't exist, skip
-    }
-  }
+  // Use a local Crawlee configuration so no global storage/state leaks between runs
+  const config = new Configuration({ persistStorage: false });
 
-  const combinedMarkdown = Object.values(pages).join("\n\n---\n\n");
+  const crawler = new CheerioCrawler(
+    {
+      maxRequestsPerCrawl: urls.length,
+      maxConcurrency: 3,
+      requestHandlerTimeoutSecs: 15,
+      async requestHandler({ request, $ }) {
+        // Strip scripts/styles, then grab text
+        $("script, style, nav, footer, header, noscript, svg, iframe").remove();
+        const text = ($("main").length ? $("main") : $("body"))
+          .text()
+          .replace(/\s+/g, " ")
+          .trim()
+          .slice(0, MAX_CONTENT_PER_PAGE);
+
+        if (text.length > 100) {
+          const label = request.url === baseUrl
+            ? "homepage"
+            : new URL(request.url).pathname;
+          pages[label] = text;
+        }
+      },
+      async failedRequestHandler({ request }) {
+        console.warn(`[crawler] Failed to crawl ${request.url}`);
+      },
+    },
+    config,
+  );
+
+  await crawler.run(urls);
+
+  const combinedMarkdown = Object.entries(pages)
+    .map(([page, content]) => `## ${page}\n\n${content}`)
+    .join("\n\n---\n\n");
 
   await prisma.crawlData.upsert({
     where: { companyId },
@@ -35,57 +62,5 @@ export async function crawlCompanyWebsite(companyId: string): Promise<CrawlResul
     update: { markdown: combinedMarkdown, pages, crawledAt: new Date() },
   });
 
-  await prisma.outreach.update({
-    where: { companyId },
-    data: { status: "crawling" },
-  });
-
   return { markdown: combinedMarkdown, pages };
-}
-
-async function fetchPageContent(url: string): Promise<string> {
-  // Check for Firecrawl API key
-  if (process.env.FIRECRAWL_API_KEY) {
-    return firecrawlFetch(url);
-  }
-  return basicFetch(url);
-}
-
-async function firecrawlFetch(url: string): Promise<string> {
-  const resp = await fetch("https://api.firecrawl.dev/v0/scrape", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.FIRECRAWL_API_KEY}`,
-    },
-    body: JSON.stringify({ url, pageOptions: { onlyMainContent: true } }),
-  });
-  if (!resp.ok) return basicFetch(url);
-  const data = await resp.json();
-  return (data as any).data?.markdown || "";
-}
-
-async function basicFetch(url: string): Promise<string> {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 10000);
-  try {
-    const resp = await fetch(url, {
-      signal: controller.signal,
-      headers: { "User-Agent": "JobAutomation Bot/1.0" },
-    });
-    clearTimeout(timeout);
-    if (!resp.ok) return "";
-    const html = await resp.text();
-    // Strip HTML tags for a basic text extraction
-    return html
-      .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
-      .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
-      .replace(/<[^>]+>/g, " ")
-      .replace(/\s+/g, " ")
-      .trim()
-      .slice(0, 15000);
-  } catch {
-    clearTimeout(timeout);
-    return "";
-  }
 }

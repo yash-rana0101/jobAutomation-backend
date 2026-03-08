@@ -1,9 +1,41 @@
-import { getAnthropicClient } from "../../config/ai";
+import { generateText } from "../../config/ai";
+import { resumeGenerationPrompt, resumeOptimizeTailoredPrompt } from "../ai/prompts";
 import prisma from "../../config/database";
 import fs from "fs";
 import path from "path";
+import { getProfile } from "../profile/profile.service";
+import { buildResumePdf, buildResumeText, ResumeData } from "../../utils/pdf";
 
 const RESUMES_DIR = path.join(process.cwd(), "uploads", "resumes");
+
+function mergeProfileWithTailored(profile: any, tailored: any): ResumeData {
+  return {
+    name: profile.name,
+    email: profile.email,
+    phone: profile.phone,
+    location: profile.location,
+    website: profile.website,
+    linkedin: profile.linkedin,
+    summary: tailored.tailoredSummary || profile.summary,
+    skills: tailored.tailoredSkills || profile.skills,
+    experience: (profile.experience as any[]).map((exp) => ({
+      ...exp,
+      bullets:
+        tailored.tailoredExperience?.find(
+          (te: any) => te.company === exp.company,
+        )?.bullets || exp.bullets,
+    })),
+    projects: (profile.projects as any[]).map((proj) => ({
+      ...proj,
+      bullets:
+        tailored.tailoredProjects?.find(
+          (tp: any) => tp.name === proj.name,
+        )?.bullets || proj.bullets,
+    })),
+    education: profile.education as any[],
+    certifications: profile.certifications as any[],
+  };
+}
 
 export async function generateResume(companyId: string): Promise<string> {
   if (!fs.existsSync(RESUMES_DIR)) {
@@ -16,42 +48,36 @@ export async function generateResume(companyId: string): Promise<string> {
   });
   if (!company) throw new Error("Company not found");
 
-  const client = getAnthropicClient();
-  const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 3000,
-    messages: [
-      {
-        role: "user",
-        content: `Generate an optimized resume for Yash Rana tailored for ${company.name}.
+  const profile = await getProfile();
 
-Company Info:
-- Industry: ${company.analysis?.industry || "Tech"}
-- Product: ${company.analysis?.product || "Unknown"}
-- Tech Stack: ${JSON.stringify(company.analysis?.techStack || [])}
-- Engineering Tools: ${JSON.stringify(company.analysis?.engineeringTools || [])}
+  const text = await generateText(
+    resumeGenerationPrompt(
+      profile as any,
+      company.name,
+      company.analysis?.industry || "Tech",
+      company.analysis?.product || "Unknown",
+      (company.analysis?.techStack as string[]) || [],
+      (company.analysis?.engineeringTools as string[]) || [],
+    ),
+    3000,
+  );
 
-Resume Requirements:
-- Yash Rana is a Backend/Fullstack Engineer
-- Skills: Node.js, TypeScript, Python, React, PostgreSQL, MongoDB, Redis, Docker, Kubernetes, AWS, CI/CD
-- Experience: Building scalable APIs, microservices, automation tools, AI integrations
-- Optimize bullet points for the company's tech stack
-- Reorder skills based on company stack relevance
-- Keep experience truthful
-- Format as clean plain text resume (sections: Contact, Summary, Skills, Experience, Projects, Education)
+  let tailored: any;
+  try {
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    tailored = JSON.parse(jsonMatch ? jsonMatch[0] : text);
+  } catch {
+    tailored = {};
+  }
 
-Return the resume as plain text, well-formatted with clear sections.`,
-      },
-    ],
-  });
+  const resumeData = mergeProfileWithTailored(profile, tailored);
 
-  const resumeText =
-    response.content[0].type === "text" ? response.content[0].text : "";
-
+  // Generate PDF
+  const pdfBuffer = await buildResumePdf(resumeData);
   const safeName = company.name.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
-  const filename = `resume_${safeName}.txt`;
+  const filename = `resume_${safeName}.pdf`;
   const filepath = path.join(RESUMES_DIR, filename);
-  fs.writeFileSync(filepath, resumeText, "utf-8");
+  fs.writeFileSync(filepath, pdfBuffer);
 
   await prisma.outreach.update({
     where: { companyId },
@@ -61,13 +87,14 @@ Return the resume as plain text, well-formatted with clear sections.`,
     },
   });
 
-  return resumeText;
+  // Return plain text for ATS analysis
+  return buildResumeText(resumeData);
 }
 
 export async function optimizeResume(
   companyId: string,
-  currentResume: string,
-  suggestions: string[]
+  _currentResume: string,
+  suggestions: string[],
 ): Promise<string> {
   const company = await prisma.company.findUnique({
     where: { id: companyId },
@@ -75,43 +102,35 @@ export async function optimizeResume(
   });
   if (!company) throw new Error("Company not found");
 
-  const client = getAnthropicClient();
-  const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 3000,
-    messages: [
-      {
-        role: "user",
-        content: `Optimize this resume to improve its ATS score for ${company.name}.
+  const profile = await getProfile();
 
-Company Tech Stack: ${JSON.stringify(company.analysis?.techStack || [])}
-Company Industry: ${company.analysis?.industry || "Tech"}
+  const text = await generateText(
+    resumeOptimizeTailoredPrompt(
+      profile as any,
+      company.name,
+      (company.analysis?.techStack as string[]) || [],
+      company.analysis?.industry || "Tech",
+      suggestions,
+    ),
+    3000,
+  );
 
-Current Resume:
-${currentResume}
+  let tailored: any;
+  try {
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    tailored = JSON.parse(jsonMatch ? jsonMatch[0] : text);
+  } catch {
+    tailored = {};
+  }
 
-ATS Improvement Suggestions:
-${suggestions.join("\n")}
+  const resumeData = mergeProfileWithTailored(profile, tailored);
 
-Rules:
-- Improve keyword alignment with company tech stack
-- Improve action verbs
-- Improve technical keyword density
-- Keep experience truthful
-- Maintain authenticity
-
-Return the optimized resume as plain text.`,
-      },
-    ],
-  });
-
-  const optimized =
-    response.content[0].type === "text" ? response.content[0].text : "";
-
+  // Overwrite PDF
+  const pdfBuffer = await buildResumePdf(resumeData);
   const safeName = company.name.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
-  const filename = `resume_${safeName}.txt`;
+  const filename = `resume_${safeName}.pdf`;
   const filepath = path.join(RESUMES_DIR, filename);
-  fs.writeFileSync(filepath, optimized, "utf-8");
+  fs.writeFileSync(filepath, pdfBuffer);
 
-  return optimized;
+  return buildResumeText(resumeData);
 }

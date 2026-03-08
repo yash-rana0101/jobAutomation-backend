@@ -3,7 +3,8 @@ dotenv.config();
 
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
-import Anthropic from "@anthropic-ai/sdk";
+import { HfInference } from "@huggingface/inference";
+import { CheerioCrawler, Configuration } from "crawlee";
 import nodemailer from "nodemailer";
 import IORedis from "ioredis";
 
@@ -41,9 +42,8 @@ async function checkEnv() {
     "ZOHO_SMTP_PORT",
     "ZOHO_SMTP_USER",
     "ZOHO_SMTP_PASSWORD",
-    "ANTHROPIC_API_KEY",
+    "HF_API_KEY",
   ];
-  const optional = ["FIRECRAWL_API_KEY"];
 
   let allOk = true;
   for (const key of required) {
@@ -51,14 +51,6 @@ async function checkEnv() {
     if (!val || val.startsWith("your_")) {
       fail(key, "not set or placeholder");
       allOk = false;
-    } else {
-      pass(key);
-    }
-  }
-  for (const key of optional) {
-    const val = process.env[key];
-    if (!val || val.startsWith("your_")) {
-      warn(key, "not set (will use basic fetch fallback)");
     } else {
       pass(key);
     }
@@ -130,61 +122,56 @@ async function checkSMTP() {
   }
 }
 
-async function checkAnthropic() {
-  section("Anthropic Claude API");
-  const key = process.env.ANTHROPIC_API_KEY;
+async function checkHuggingFace() {
+  section("Hugging Face Inference API");
+  const key = process.env.HF_API_KEY;
   if (!key || key.startsWith("your_")) {
-    warn("Skipped", "ANTHROPIC_API_KEY not configured");
-    results.push({ name: "Anthropic", ok: false });
+    warn("Skipped", "HF_API_KEY not configured");
+    results.push({ name: "HuggingFace", ok: false });
     return;
   }
   try {
-    const client = new Anthropic({ apiKey: key });
-    const msg = await client.messages.create({
-      model: "claude-opus-4-5",
-      max_tokens: 10,
+    const hf = new HfInference(key);
+    const result = await hf.chatCompletion({
+      model: "openai/gpt-oss-20b",
       messages: [{ role: "user", content: "Reply with: ok" }],
+      max_tokens: 10,
     });
-    const text = msg.content[0].type === "text" ? msg.content[0].text : "";
+    const text = result.choices[0].message.content ?? "";
     pass("API key valid", `Response: "${text.trim()}"`);
-    results.push({ name: "Anthropic", ok: true });
+    results.push({ name: "HuggingFace", ok: true });
   } catch (e: any) {
     fail("API call failed", e.message);
-    results.push({ name: "Anthropic", ok: false });
+    results.push({ name: "HuggingFace", ok: false });
   }
 }
 
-async function checkFirecrawl() {
-  section("Firecrawl API");
-  const key = process.env.FIRECRAWL_API_KEY;
-  if (!key || key.startsWith("your_")) {
-    warn("Skipped", "FIRECRAWL_API_KEY not set — basic fetch will be used as fallback");
-    results.push({ name: "Firecrawl", ok: true }); // optional, basic fetch is fallback
-    return;
-  }
+async function checkCrawlee() {
+  section("Crawlee (CheerioCrawler)");
   try {
-    const resp = await fetch("https://api.firecrawl.dev/v0/scrape", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${key}`,
+    let scraped = false;
+    const config = new Configuration({ persistStorage: false });
+    const crawler = new CheerioCrawler(
+      {
+        maxRequestsPerCrawl: 1,
+        requestHandlerTimeoutSecs: 15,
+        async requestHandler({ $ }) {
+          const title = $("title").text().trim();
+          pass("Crawl succeeded", `example.com title: "${title}"`);
+          scraped = true;
+        },
+        async failedRequestHandler({ request }) {
+          fail("Crawl failed", request.url);
+        },
       },
-      body: JSON.stringify({ url: "https://example.com", pageOptions: { onlyMainContent: true } }),
-    });
-    if (resp.status === 401) {
-      fail("API key invalid", "401 Unauthorized");
-      results.push({ name: "Firecrawl", ok: false });
-    } else if (resp.ok || resp.status === 402) {
-      // 402 = valid key but quota exceeded
-      pass("API key valid", resp.status === 402 ? "Quota exceeded but key is valid" : "Connected successfully");
-      results.push({ name: "Firecrawl", ok: true });
-    } else {
-      warn("Unexpected status", `HTTP ${resp.status}`);
-      results.push({ name: "Firecrawl", ok: true });
-    }
+      config,
+    );
+    await crawler.run(["https://trivx.in"]);
+    if (!scraped) fail("No content retrieved", "Page returned empty or failed");
+    results.push({ name: "Crawlee", ok: scraped });
   } catch (e: any) {
-    fail("Request failed", e.message);
-    results.push({ name: "Firecrawl", ok: false });
+    fail("Crawlee error", e.message);
+    results.push({ name: "Crawlee", ok: false });
   }
 }
 
@@ -196,8 +183,8 @@ async function main() {
   await checkPostgres();
   await checkRedis();
   await checkSMTP();
-  await checkAnthropic();
-  await checkFirecrawl();
+  await checkHuggingFace();
+  await checkCrawlee();
 
   // Summary
   console.log(`\n${BOLD}━━━ Summary ━━━${RESET}`);
@@ -207,14 +194,13 @@ async function main() {
   }
 
   const failed = results.filter((r) => !r.ok);
-  const required_failed = failed.filter((r) => r.name !== "Firecrawl");
 
   console.log();
-  if (required_failed.length === 0) {
+  if (failed.length === 0) {
     console.log(`${GREEN}${BOLD}All required services are ready. You can start the server.${RESET}\n`);
     process.exit(0);
   } else {
-    console.log(`${RED}${BOLD}${required_failed.length} required service(s) failed. Fix them before starting the server.${RESET}\n`);
+    console.log(`${RED}${BOLD}${failed.length} required service(s) failed. Fix them before starting the server.${RESET}\n`);
     process.exit(1);
   }
 }

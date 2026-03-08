@@ -1,4 +1,5 @@
-import { getAnthropicClient } from "../../config/ai";
+import { generateText } from "../../config/ai";
+import { atsAnalysisPrompt } from "../ai/prompts";
 import prisma from "../../config/database";
 
 export interface ATSResult {
@@ -19,39 +20,15 @@ export async function analyzeATS(
   });
   if (!company) throw new Error("Company not found");
 
-  const client = getAnthropicClient();
-  const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 1000,
-    messages: [
-      {
-        role: "user",
-        content: `Analyze this resume against the company's tech stack for ATS compatibility.
-
-Company: ${company.name}
-Tech Stack: ${JSON.stringify(company.analysis?.techStack || [])}
-Engineering Tools: ${JSON.stringify(company.analysis?.engineeringTools || [])}
-Industry: ${company.analysis?.industry || "Tech"}
-
-Resume Content:
-${resumeContent.slice(0, 5000)}
-
-Return a JSON object:
-{
-  "score": <number 0-100>,
-  "keywordMatch": <number 0-100>,
-  "formattingCompatibility": "High" | "Medium" | "Low",
-  "skillRelevance": "High" | "Medium" | "Low",
-  "suggestions": [<array of improvement suggestions>]
-}
-
-Return ONLY valid JSON.`,
-      },
-    ],
-  });
-
-  const text =
-    response.content[0].type === "text" ? response.content[0].text : "";
+  const text = await generateText(
+    atsAnalysisPrompt(
+      company.name,
+      (company.analysis?.techStack as string[]) || [],
+      (company.analysis?.engineeringTools as string[]) || [],
+      company.analysis?.industry || "Tech",
+      resumeContent,
+    )
+  );
   let result: ATSResult;
   try {
     const jsonMatch = text.match(/\{[\s\S]*\}/);

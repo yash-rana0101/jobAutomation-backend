@@ -1,0 +1,50 @@
+**YASH RANA**
+[Phone Number] | [Email Address] | [LinkedIn Profile URL] | [GitHub Profile URL]
+
+---
+
+**SUMMARY**
+
+Results-driven Backend/Fullstack Engineer with a strong track record in developing scalable APIs, microservices, and robust automation tools. Proficient in integrating Artificial Intelligence and Machine Learning solutions, leveraging expertise in Python, Node.js, TypeScript, and AWS. Eager to apply deep technical knowledge in building efficient, high-performance systems to Flowjin's innovative AI-powered content creation and social media automation platform.
+
+---
+
+**SKILLS**
+
+*   **AI/ML & NLP:** Artificial Intelligence (AI), Machine Learning (ML), Natural Language Processing (NLP)
+*   **Programming Languages:** Python, TypeScript, JavaScript
+*   **Backend:** Node.js, Express.js (or relevant Node.js frameworks), Microservices, RESTful APIs
+*   **Frontend:** React
+*   **Databases:** PostgreSQL, MongoDB, Redis
+*   **Cloud & DevOps:** AWS, Docker, Kubernetes, CI/CD
+*   **Tools & Methodologies:** Git, Agile Development
+
+---
+
+**EXPERIENCE**
+
+**[Your Previous Company Name]**, [City, State]
+**[Your Job Title, e.g., Senior Backend Engineer / Fullstack Developer]** | [Start Date] – [End Date]
+
+*   Architected and developed highly scalable microservices and APIs using Node.js and Python, designed to efficiently process and manage large volumes of data for real-time content delivery.
+*   Implemented AI/ML integrations for advanced data processing, automation of content generation, and intelligent feature enhancement, aligning with capabilities required for AI clipping platforms.
+*   Designed and deployed robust automation tools to streamline complex backend operations and data pipelines, significantly improving operational efficiency and reducing manual intervention.
+*   Managed and optimized database systems (PostgreSQL, MongoDB, Redis) to ensure high availability, data integrity, and performant query execution for critical application features.
+*   Leveraged Docker and Kubernetes for containerization and orchestration, facilitating efficient deployment, scaling, and management of distributed applications on AWS infrastructure.
+*   Established and maintained CI/CD pipelines to automate testing, build, and deployment processes, accelerating development cycles and ensuring continuous delivery of high-quality software.
+*   Collaborated with cross-functional teams to translate complex requirements into technical specifications, developing full-stack solutions with React for dynamic user interfaces.
+
+---
+
+**PROJECTS**
+
+*   **[Project Title 1]:** [Brief description focusing on AI, automation, scalability, web development, e.g., "Developed a full-stack web application integrating NLP for sentiment analysis, demonstrating proficiency in Python, Node.js, and React."]
+*   **[Project Title 2]:** [Brief description highlighting relevant technologies and impact, e.g., "Built a scalable microservice architecture for real-time data processing, utilizing AWS, Docker, and PostgreSQL."]
+
+---
+
+**EDUCATION**
+
+**[Your Degree Name, e.g., Bachelor of Science in Computer Science]**
+[Your University Name], [City, State]
+[Graduation Date]

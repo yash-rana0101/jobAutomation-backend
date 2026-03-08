@@ -1,0 +1,73 @@
+**YASH RANA**  
+Email: yash.rana@email.com | Phone: +1‑555‑123‑4567  
+GitHub: github.com/yashrana | LinkedIn: linkedin.com/in/yashrana
+
+---
+
+## SUMMARY  
+Seasoned Backend/Full‑Stack Engineer with 7+ years of experience building high‑availability APIs, microservices, and AI‑enabled automation tools. Proven track record of delivering scalable, cloud‑native solutions on AWS, Azure, and GCP using modern JavaScript/TypeScript stacks, container orchestration, and IaC. Passionate about integrating LLMs into DevOps workflows and optimizing CI/CD pipelines for rapid delivery.
+
+---
+
+## SKILLS  
+- **Next.js / React** – Server‑side rendering, static site generation, component architecture  
+- **Node.js / TypeScript / JavaScript** – REST/GraphQL APIs, event‑driven microservices, Lambda functions  
+- **OpenAI / LLMs** – Prompt engineering, API integration, data preprocessing pipelines  
+- **Cloud Platforms** – AWS (ECS/EKS, Lambda, S3, RDS, DynamoDB), Azure (AKS, Functions, CosmosDB), GCP (GKE, Cloud Run, BigQuery)  
+- **Databases** – MongoDB (Atlas), PostgreSQL, Redis (caching, pub/sub)  
+- **Container & Orchestration** – Docker, Kubernetes (EKS, AKS, GKE), Helm, Terraform  
+- **CI/CD & DevOps** – GitHub Actions, GitLab CI, Bitbucket Pipelines, Terraform, Terraform Cloud, Docker Compose, CloudFormation  
+- **Other Tools** – Git, GitHub, GitLab, Bitbucket, Docker, Kubernetes, Terraform, OpenAI API, MongoDB Atlas, CI/CD pipelines  
+
+---
+
+## EXPERIENCE  
+
+### Senior Backend Engineer – Acme Cloud Solutions, San Francisco, CA  
+*July 2020 – Present*  
+- Designed and maintained a server‑less, event‑driven microservice architecture on AWS (Lambda, EventBridge, DynamoDB) serving 10 M+ daily requests.  
+- Implemented AI‑powered code‑review tooling that reduced manual QA time by **35 %** using OpenAI embeddings and custom fine‑tuned models.  
+- Built reusable Terraform modules for multi‑cloud deployments (AWS, Azure, GCP) that cut infrastructure provisioning time from **48 h** to **2 h**.  
+- Spearheaded migration of legacy monolith to a containerized platform on Kubernetes (EKS) with Helm charts, achieving 99.99 % uptime.  
+- Led CI/CD pipeline redesign using GitHub Actions, integrating automated tests, linting, and Canary deployments, lowering release cycle time from **2 weeks** to **48 hrs**.
+
+### Full‑Stack Engineer – BetaDev Inc., New York, NY  
+*May 2017 – June 2020*  
+- Developed a Next.js + React web portal for SaaS product, achieving < 200 ms page load times via server‑side rendering and incremental static regeneration.  
+- Authored TypeScript‑based Node.js services for real‑time analytics, leveraging Redis pub/sub and PostgreSQL for durable storage.  
+- Integrated third‑party APIs (Stripe, Twilio) and implemented OAuth 2.0 flows, improving security compliance.  
+- Automated deployment pipelines with Docker, Kubernetes, and Terraform; introduced Blue‑Green strategy, reducing downtime by **90 %**.  
+- Conducted code reviews, mentored junior engineers, and introduced best‑practice guidelines for API versioning and documentation.
+
+### Software Engineer – GammaTech, Los Angeles, CA  
+*June 2015 – April 2017*  
+- Built RESTful APIs using Node.js/Express, handling 5 M requests/month with horizontal scaling on AWS EC2.  
+- Implemented caching layer with Redis to cut database read latency by **70 %**.  
+- Contributed to open‑source tooling for automated testing, resulting in a 25 % reduction in regression bugs.  
+- Collaborated cross‑functionally with product and UX teams to define feature roadmaps and technical specifications.
+
+---
+
+## PROJECTS  
+
+### Trivx AI (Personal) – AI‑Powered DevOps Automation Platform  
+*Jan 2023 – Present*  
+- Architected a full‑stack solution (Next.js, React, Node.js, TypeScript) that automates deployment pipelines, resource scaling, and cost optimization across AWS, Azure, and GCP.  
+- Integrated OpenAI GPT‑4 for intelligent suggestion of IaC snippets and auto‑resolution of pipeline failures.  
+- Deployed to AWS EKS with Helm; automated Terraform provisioning of cluster and networking components.  
+- Achieved 30 % cost savings for client projects by recommending right‑size resources and spot instances.
+
+### Docker‑K8s Microservice Boilerplate  
+*Aug 2019*  
+- Developed a reusable boilerplate for building Node.js microservices with Docker, Kubernetes, and CI/CD pipelines.  
+- Included health‑checks, Prometheus metrics, and automated Helm chart generation.  
+- Published as an npm package; now used by 15+ internal teams to accelerate onboarding.
+
+---
+
+## EDUCATION  
+
+**Bachelor of Science in Computer Science**  
+University of California, Berkeley – 2015  
+
+---

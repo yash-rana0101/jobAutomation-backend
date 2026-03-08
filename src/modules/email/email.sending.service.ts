@@ -2,6 +2,8 @@ import { createSmtpTransport } from "../../config/smtp";
 import prisma from "../../config/database";
 import fs from "fs";
 import path from "path";
+import { getProfile } from "../profile/profile.service";
+import { buildEmailHtml } from "../../utils/email-template";
 
 export async function sendEmail(companyId: string) {
   const outreach = await prisma.outreach.findUnique({
@@ -13,13 +15,25 @@ export async function sendEmail(companyId: string) {
     throw new Error("Email must be approved before sending");
   }
 
+  const profile = await getProfile();
   const transport = createSmtpTransport();
 
+  const bodyText = outreach.emailBody || "";
+  const bodyHtml = buildEmailHtml(bodyText, {
+    name: profile.name,
+    phone: profile.phone,
+    location: profile.location,
+    email: profile.email,
+    linkedin: profile.linkedin,
+    website: profile.website,
+  });
+
   const mailOptions: any = {
-    from: `"Yash Rana" <${process.env.ZOHO_SMTP_USER}>`,
+    from: `"${profile.name}" <${process.env.ZOHO_SMTP_USER}>`,
     to: outreach.company.email,
     subject: outreach.emailSubject,
-    text: outreach.emailBody || "",
+    text: bodyText,
+    html: bodyHtml,
   };
 
   // Attach resume if available
