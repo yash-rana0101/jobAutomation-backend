@@ -1,5 +1,6 @@
 import prisma from "../../config/database";
 import { queueCompanyForCrawl } from "../../queues/queues";
+import { isValidWebsiteUrl } from "../crawler/crawler.service";
 
 export async function getAllCompanies() {
   return prisma.company.findMany({
@@ -85,9 +86,11 @@ export async function createManyCompanies(
       const company = await createCompany(data);
       results.push(company);
 
-      // Queue for crawling if requested
-      if (options?.queueCrawl) {
+      // Queue for crawling if requested (skip invalid URLs)
+      if (options?.queueCrawl && isValidWebsiteUrl(company.website)) {
         await queueCompanyForCrawl(company.id, company.website);
+      } else if (options?.queueCrawl) {
+        console.warn(`[company-service] Skipped crawl for ${data.name}: invalid URL "${data.website}"`);
       }
     } catch (err: any) {
       console.warn(`[company-service] Skipped ${data.name}: ${err.message}`);

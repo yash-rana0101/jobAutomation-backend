@@ -1,20 +1,26 @@
-import { HfInference } from "@huggingface/inference";
-
-let hf: HfInference | null = null;
-
-function getHFClient(): HfInference {
-  if (!hf) {
-    hf = new HfInference(process.env.HF_API_KEY);
-  }
-  return hf;
-}
+const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
+const MODEL = "qwen2.5:14b";
 
 export async function generateText(prompt: string, maxTokens = 2048): Promise<string> {
-  const client = getHFClient();
-  const result = await client.chatCompletion({
-    model: "Qwen/Qwen3.5-397B-A17B",
-    messages: [{ role: "user", content: prompt }],
-    max_tokens: maxTokens,
+  const res = await fetch(`${OLLAMA_BASE_URL}/api/chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: MODEL,
+      messages: [{ role: "user", content: prompt }],
+      stream: false,
+      options: {
+        num_predict: maxTokens,
+        temperature: 0.4,
+      },
+    }),
   });
-  return result.choices[0].message.content ?? "";
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Ollama error ${res.status}: ${text}`);
+  }
+
+  const data = await res.json();
+  return data.message?.content ?? "";
 }

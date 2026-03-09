@@ -41,8 +41,7 @@ export function getEmailQueue(): Queue {
 export async function queueCompanyForCrawl(companyId: string, website: string) {
   const q = getCrawlQueue();
   await q.add("crawl", { companyId, website }, {
-    attempts: 3,
-    backoff: { type: "exponential", delay: 5000 },
+    attempts: 1,
     removeOnComplete: 100,
     removeOnFail: 200,
   });

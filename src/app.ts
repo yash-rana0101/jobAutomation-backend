@@ -31,7 +31,7 @@ app.get("/api/health", (_req, res) => {
 
 app.listen(PORT, () => {
   console.log(`API server running on http://localhost:${PORT}`);
-  // startWorkers(); // disabled for pipeline testing
+  startWorkers();
 });
 
 export default app;

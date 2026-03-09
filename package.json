@@ -10,6 +10,8 @@
     "db:migrate": "prisma migrate dev",
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
+    "db:clear": "tsx scripts/drain-queues.ts && tsx scripts/clear-db.ts",
+    "queue:drain": "tsx scripts/drain-queues.ts",
     "preflight": "tsx src/scripts/preflight.ts"
   },
   "keywords": [],
@@ -26,6 +28,7 @@
     "crawlee": "^3.16.0",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
+    "groq-sdk": "^0.37.0",
     "ioredis": "^5.10.0",
     "multer": "^2.1.1",
     "nodemailer": "^8.0.1",

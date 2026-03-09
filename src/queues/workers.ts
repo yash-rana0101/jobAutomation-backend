@@ -29,9 +29,10 @@ export function startWorkers() {
         where: { companyId },
         data: { status: "crawling" },
       });
-      await crawlCompanyWebsite(companyId);
+      const result = await crawlCompanyWebsite(companyId);
 
-      // Chain: push to analyze queue
+      // Always chain to analyze — even with empty crawl, analysis can use description
+      console.log(`[crawl-worker] ${companyId}: ${Object.keys(result.pages).length} pages crawled`);
       const q = getAnalyzeQueue();
       await q.add("analyze", { companyId }, {
         attempts: 2,
